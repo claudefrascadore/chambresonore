@@ -1,0 +1,4 @@
+# Dépendances Python pour Chambre Sonore (Orbbec Gemini 2)
+pyorbbecsdk==2.0.15
+opencv-python==4.12.0.88
+numpy==2.2.0
