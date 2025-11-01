@@ -1,8 +1,40 @@
-# Environnement virtuel
+# --- ENVIRONNEMENT PYTHON ---
+# Environnement virtuel local
 TestPython/venv/
-# Fichiers de capture volumineux
-TestPython/captures/
-# Fichiers temporaires
-*.pyc
+# Fichiers compilés / cache
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.tmp
+
+# --- CAPTURES ET DONNÉES ---
+# Dossier des captures d'images et profondeur
+TestPython/captures/
+# Fichiers de profondeur bruts volumineux
+*.npy
+*.npz
+# Fichiers d'image temporaires
+*.png
+*.jpg
+*.jpeg
+
+# --- CONFIGURATION ET SYSTÈME ---
+# Sauvegardes ou fichiers temporaires d’édition
+*~
+*.bak
+*.swp
 .DS_Store
+Thumbs.db
+
+# --- ÉDITEURS ET ENVIRONNEMENTS ---
+# VS Code / PyCharm / etc.
+.vscode/
+.idea/
+
+# --- ARCHIVES ---
+*.zip
+*.tar
+*.gz
+*.7z
