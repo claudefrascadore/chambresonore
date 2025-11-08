@@ -1,7 +1,4 @@
-# --- ENVIRONNEMENT PYTHON ---
-# Environnement virtuel local
-TestPython/venv/
-# Fichiers compilés / cache
+# --- FICHIERS PYTHON ---
 __pycache__/
 *.pyc
 *.pyo
@@ -10,18 +7,14 @@ __pycache__/
 *.tmp
 
 # --- CAPTURES ET DONNÉES ---
-# Dossier des captures d'images et profondeur
 TestPython/captures/
-# Fichiers de profondeur bruts volumineux
 *.npy
 *.npz
-# Fichiers d'image temporaires
 *.png
 *.jpg
 *.jpeg
 
 # --- CONFIGURATION ET SYSTÈME ---
-# Sauvegardes ou fichiers temporaires d’édition
 *~
 *.bak
 *.swp
@@ -29,12 +22,16 @@ TestPython/captures/
 Thumbs.db
 
 # --- ÉDITEURS ET ENVIRONNEMENTS ---
-# VS Code / PyCharm / etc.
 .vscode/
 .idea/
+.venv/
+venv/
 
 # --- ARCHIVES ---
 *.zip
 *.tar
 *.gz
 *.7z
+
+# --- CODEX ---
+codex/Chambre_sonore_Phase_*/transfer_log.json
