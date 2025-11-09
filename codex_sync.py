@@ -81,6 +81,65 @@ def update_history(info: dict, copied: list):
             history = []
     history.append(entry)
     history_file.write_text(json.dumps(history, indent=2, ensure_ascii=False), encoding="utf-8")
+def generate_html_index():
+    """Génère un index HTML listant les phases et archives."""
+    html_path = codex / "index.html"
+    history = []
+    if history_file.exists():
+        try:
+            history = json.loads(history_file.read_text(encoding="utf-8"))
+        except Exception:
+            history = []
+
+    # Génération du contenu HTML
+    html = [
+        "<!DOCTYPE html>",
+        "<html lang='fr'>",
+        "<head>",
+        "<meta charset='UTF-8'>",
+        "<title>Index du Codex – Chambre sonore</title>",
+        "<style>",
+        "body { font-family: sans-serif; background: #fdfdfd; color: #222; margin: 2em; }",
+        "h1 { color: #444; }",
+        "table { border-collapse: collapse; width: 100%; margin-top: 1em; }",
+        "th, td { border: 1px solid #ccc; padding: 0.5em; text-align: left; }",
+        "th { background: #eee; }",
+        "a { color: #0066cc; text-decoration: none; }",
+        "a:hover { text-decoration: underline; }",
+        "</style>",
+        "</head>",
+        "<body>",
+        "<h1>Index du Codex – Chambre sonore</h1>",
+        "<h2>Phases disponibles</h2>",
+        "<table>",
+        "<tr><th>Phase</th><th>Date</th><th>Fichiers copiés</th><th>Accès</th></tr>"
+    ]
+
+    for entry in reversed(history):
+        phase = entry.get("phase")
+        date = entry.get("date")
+        files = len(entry.get("files", []))
+        folder = f"Chambre_sonore_Phase_{phase}"
+        archive = f"archive/{folder}.zip"
+        link = ""
+        if (codex / folder).exists():
+            link = f"<a href='{folder}/'>Dossier</a>"
+        elif (codex / archive).exists():
+            link = f"<a href='{archive}'>Archive</a>"
+        else:
+            link = "(non disponible)"
+        html.append(f"<tr><td>{phase}</td><td>{date}</td><td>{files}</td><td>{link}</td></tr>")
+
+    html += [
+        "</table>",
+        "<p><a href='transfer_history.json'>Historique complet (JSON)</a></p>",
+        "<p style='margin-top:2em;font-size:small;color:#666;'>Généré automatiquement le "
+        + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "</p>",
+        "</body></html>"
+    ]
+
+    html_path.write_text("\n".join(html), encoding="utf-8")
+    print(f"{GREEN}✓ Index HTML mis à jour : {html_path}{RESET}")
 
 def sync_codex(keep_phases=None):
     if not meta_file.exists():
@@ -128,6 +187,8 @@ def sync_codex(keep_phases=None):
     # Résumé
     kept_display = sorted(set(kept_list) | set(keep_phases or []))
     print("\n--- Résumé ---")
+    generate_html_index()
+
     print(f"{GREEN}Phase active : {phase}{RESET}")
     if kept_display:
         print(f"{YELLOW}Phases conservées : {', '.join(kept_display)}{RESET}")
