@@ -1,0 +1,17 @@
+{
+  "project": "Chambre sonore",
+  "description": "Installation interactive lumineuse et sonore utilisant les caméras 3D Orbbec Gemini 2 et un pilotage DMX local.",
+  "author": "Claude Frascadore",
+  "repository": "https://github.com/claudefrascadore/ChambreSonore",
+  "license": "Propriétaire – Claude Frascadore",
+  "phases": 3,
+  "last_update": "2025-11-08",
+  "structure": {
+    "notes": "Réflexions, idées, comptes rendus de tests.",
+    "howto": "Procédures et tutoriels internes.",
+    "decisions": "ADR (Architectural Decision Records).",
+    "assets": "Images, schémas, documents auxiliaires.",
+    "archive": "Anciennes versions ou données brutes."
+  }
+}
+
