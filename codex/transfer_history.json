@@ -1,0 +1,13 @@
+[
+  {
+    "phase": "3",
+    "project": "Chambre sonore",
+    "date": "2025-11-09 11:36:22",
+    "files": [
+      "README.md",
+      "bump_phase.py",
+      "src/",
+      "config/"
+    ]
+  }
+]
