@@ -2,12 +2,9 @@
 # ------------------------------------------------------------
 # sync.sh — Synchronisation complète du projet Chambre sonore
 # ------------------------------------------------------------
-# Étapes :
-# 1. Incrémente automatiquement la phase dans codex/project.json
-# 2. Exécute codex_sync.py pour transférer les fichiers
-# 3. Ajoute toutes les modifications à Git
-# 4. Committe avec message horodaté
-# 5. Pousse vers GitHub
+# Usage :
+#   ./sync.sh          → Incrémente automatiquement la phase
+#   ./sync.sh --manual → Conserve la phase actuelle (mode manuel)
 # ------------------------------------------------------------
 
 set -e
@@ -17,7 +14,10 @@ CYAN='\033[0;36m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 
-# Vérifie que bump_phase.py existe
+MODE="auto"
+[[ "$1" == "--manual" ]] && MODE="manual"
+
+# Vérifie l’existence du bump_phase.py, le crée au besoin
 if [[ ! -f bump_phase.py ]]; then
   echo -e "${CYAN}Création du script bump_phase.py...${NC}"
   cat > bump_phase.py << 'EOF'
@@ -49,23 +49,31 @@ EOF
   chmod +x bump_phase.py
 fi
 
-# --- Étape 1 : Incrémentation de la phase ---
-echo -e "${CYAN}--- Étape 1 : Incrémentation de phase ---${NC}"
-python3 bump_phase.py
+# ------------------------------------------------------------
+# Étape 1 — Synchronisation
+# ------------------------------------------------------------
+if [[ "$MODE" == "auto" ]]; then
+  echo -e "${CYAN}--- Étape 1 : Incrémentation de la phase ---${NC}"
+  python3 bump_phase.py
+else
+  echo -e "${CYAN}--- Étape 1 : Synchronisation manuelle ---${NC}"
+  python3 codex_sync.py
+fi
 
-# --- Étape 2 : Ajout Git ---
-echo -e "${CYAN}--- Étape 2 : Ajout des fichiers modifiés ---${NC}"
+# ------------------------------------------------------------
+# Étape 2 — Commit et push
+# ------------------------------------------------------------
+echo -e "${CYAN}--- Étape 2 : Préparation Git ---${NC}"
 git add -A
-
-# --- Étape 3 : Commit avec date/heure ---
 DATE=$(date +"%Y-%m-%d %H:%M:%S")
-MESSAGE="docs(codex): sync quotidienne - Phase auto - $DATE"
-echo -e "${CYAN}--- Étape 3 : Commit ---${NC}"
-git commit -m "$MESSAGE" || echo "Aucun changement à valider."
+if [[ "$MODE" == "auto" ]]; then
+  MESSAGE="docs(codex): sync quotidienne (auto-phase) - $DATE"
+else
+  MESSAGE="docs(codex): sync quotidienne (manuel) - $DATE"
+fi
 
-# --- Étape 4 : Push vers GitHub ---
-echo -e "${CYAN}--- Étape 4 : Push vers GitHub ---${NC}"
+git commit -m "$MESSAGE" || echo "Aucun changement à valider."
 git push
 
-echo -e "${GREEN}✓ Synchronisation et phase terminées avec succès.${NC}"
+echo -e "${GREEN}✓ Synchronisation terminée (${MODE}).${NC}"
 
