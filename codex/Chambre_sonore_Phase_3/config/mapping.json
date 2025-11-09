@@ -1,0 +1,12 @@
+{
+  "grid_size": [6, 6],
+  "dmx_universe": 1,
+  "channels": {
+    "1": { "r": 1, "g": 2, "b": 3 },
+    "2": { "r": 4, "g": 5, "b": 6 }
+  },
+  "sounds": {
+    "1": "sounds/obj01.wav",
+    "2": "sounds/obj02.wav"
+  }
+}
