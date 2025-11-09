@@ -1,0 +1,66 @@
+# ============================================================
+# Projet : Chambre sonore
+# Phase : 3
+# Système Codex – Résumé technique
+# ============================================================
+
+## État actuel
+
+- Structure Codex : installée et opérationnelle
+- Dépôt Git : https://github.com/claudefrascadore/ChambreSonore.git
+- Phase active : Chambre_sonore_Phase_3
+- Journal de transfert : codex/Chambre_sonore_Phase_3/transfer_log.json
+- Version SDK Orbbec : pyorbbecsdk v2.0.13 (Linux x86_64)
+- Caméra : Orbbec Gemini 2
+- Éditeur : pluma
+- Environnement virtuel : .venv activé
+
+## Templates Codex disponibles
+
+| Module | Fichier modèle | Description |
+|--------|----------------|--------------|
+| orbbec.depth_test | template_orbbec_depth_test.py | Test du flux de profondeur |
+| orbbec.rgb_depth_viewer | template_orbbec_rgb_depth_viewer.py | Vue synchronisée RGB + profondeur |
+
+## Commandes principales
+
+```bash
+# Activer l’environnement virtuel
+source .venv/bin/activate
+
+# Génération de modules
+python3 codex/codex_run.py --module orbbec.depth_test --phase 3 --keep
+python3 codex/codex_run.py --module orbbec.rgb_depth_viewer --phase 3 --keep
+
+# Vérifier le journal de transfert
+cat codex/Chambre_sonore_Phase_3/transfer_log.json
+
+Structure du projet (simplifiée)
+
+ChambreSonore/
+├── src/
+│ └── orbbec/
+│ ├── depth_test.py
+│ └── rgb_depth_viewer.py
+├── codex/
+│ ├── codex_run.py
+│ ├── templates/
+│ │ ├── template_orbbec_depth_test.py
+│ │ └── template_orbbec_rgb_depth_viewer.py
+│ ├── Chambre_sonore_Phase_3/
+│ │ └── transfer_log.json
+│ ├── archive/
+│ └── howto/
+│ └── resume_phase3.txt
+├── .venv/
+└── .gitignore
+
+
+Prochaine étape
+Développement des modules suivants :
+dmx.light_matrix → contrôle DMX 6×6 via OLA
+audio.trigger_matrix → déclenchement des sons selon la présence
+
+============================================================
+Fin du résumé Phase 3
+============================================================
