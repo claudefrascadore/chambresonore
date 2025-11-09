@@ -25,5 +25,13 @@
     "files": [
       "/home/claude/Projets/ChambreSonore/src/orbbec/depth_test.py"
     ]
+  },
+  {
+    "phase": "3",
+    "project": "Chambre sonore",
+    "date": "2025-11-09 15:42:59",
+    "files": [
+      "/home/claude/Projets/ChambreSonore/src/orbbec/rgb_depth_viewer.py"
+    ]
   }
 ]
