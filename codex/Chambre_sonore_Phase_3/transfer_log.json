@@ -33,5 +33,20 @@
     "files": [
       "/home/claude/Projets/ChambreSonore/src/orbbec/rgb_depth_viewer.py"
     ]
+  },
+  {
+    "module": "orbbec.dmx_audio_bridge",
+    "phase": "3",
+    "desc": "Pont DMX+Audio 6x6, intégration OLA/Pygame",
+    "timestamp": "2025-11-09T18:26:14",
+    "status": "registered"
+  },
+  {
+    "phase": "3",
+    "project": "Chambre sonore",
+    "date": "2025-11-09 18:33:54",
+    "files": [
+      "/home/claude/Projets/ChambreSonore/src/orbbec/dmx_audio_bridge.py"
+    ]
   }
 ]
