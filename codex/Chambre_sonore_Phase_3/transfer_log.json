@@ -63,5 +63,12 @@
     "phase": "3",
     "timestamp": "2025-11-09T18:52:07",
     "status": "generated"
+  },
+  {
+    "module": "orbbec.dmx_audio_bridge",
+    "template": "template_orbbec_dmx_audio_bridge.py",
+    "phase": "3",
+    "timestamp": "2025-11-09T18:52:57",
+    "status": "generated"
   }
 ]
