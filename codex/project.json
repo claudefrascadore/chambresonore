@@ -1,11 +1,10 @@
 {
   "project_name": "Chambre sonore",
-  "phase": "2",
+  "phase": "3",
   "updated": "2025-11-08",
   "author": "Claude Frascadore",
   "description": "Installation interactive lumineuse et sonore pilotée par caméras 3D Orbbec Gemini 2 et système DMX local, sans cloud.",
   "created": "2025-11-08",
-  "updated": "2025-11-08",
   "repository": "https://github.com/claude-frascadore/ChambreSonore",
   "license": "Propriétaire – Claude Frascadore"
 }
