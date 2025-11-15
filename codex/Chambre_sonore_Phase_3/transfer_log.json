@@ -35,13 +35,6 @@
     ]
   },
   {
-    "module": "orbbec.dmx_audio_bridge",
-    "phase": "3",
-    "desc": "Pont DMX+Audio 6x6, intégration OLA/Pygame",
-    "timestamp": "2025-11-09T18:26:14",
-    "status": "registered"
-  },
-  {
     "phase": "3",
     "project": "Chambre sonore",
     "date": "2025-11-09 18:33:54",
@@ -59,16 +52,7 @@
   },
   {
     "module": "orbbec.dmx_audio_bridge",
-    "template": "template_orbbec_dmx_audio_bridge.py",
     "phase": "3",
-    "timestamp": "2025-11-09T18:52:07",
-    "status": "generated"
-  },
-  {
-    "module": "orbbec.dmx_audio_bridge",
-    "template": "template_orbbec_dmx_audio_bridge.py",
-    "phase": "3",
-    "timestamp": "2025-11-09T18:52:57",
-    "status": "generated"
+    "description": "Pont DMX+Audio 6x6, intégration OLA/Pygame"
   }
 ]

@@ -1,52 +1,59 @@
 # -*- coding: utf-8 -*-
 """
-tracker.py — simulateur d'événements de tracking.
-Contrat minimal: publier des objets TrackerEvent(x, y, volume, dwell_s)
-Remplacer cette source par l'intégration Orbbec réelle.
+tracker.py
+Rassemble les positions (x,y[,z]) détectées par orbbec_input et expose:
+- positions en coordonnées "monde" (plan au sol)
+- cellule de grille 6×6 correspondante si calibrage disponible
+
+Intégration Phase 4:
+- Injection d'un GridCalibrator pour mapper vers la grille.
 """
-from __future__ import annotations
-from dataclasses import dataclass
-import random, time, threading
-from typing import Callable, Optional
 
-@dataclass
-class TrackerEvent:
-    x: int          # 0..5
-    y: int          # 0..5
-    volume: float   # 0..1
-    dwell_s: float  # temps passé dans la cellule (s)
+from typing import Dict, List, Optional, Tuple
 
-class TrackerSimulator:
-    def __init__(self, on_event: Callable[[TrackerEvent], None], period_s: float = 1.0):
-        self.on_event = on_event
-        self.period_s = max(0.1, float(period_s))
-        self._stop = False
-        self._thread: Optional[threading.Thread] = None
-        self._dwell = 0.0
-        self._last = None
+# On suppose que orbbec_input fournit un flux de positions 2D/3D déjà filtrées
+from src.orbbec_input import OrbbecStream
+from src.calibration import GridCalibrator
 
-    def start(self):
-        self._stop = False
-        self._thread = threading.Thread(target=self._run, daemon=True)
-        self._thread.start()
 
-    def stop(self):
-        self._stop = True
-        if self._thread:
-            self._thread.join(timeout=1.0)
+class Tracker:
+    def __init__(self, stream: OrbbecStream, calibrator: Optional[GridCalibrator] = None):
+        self.stream = stream
+        self.calibrator = calibrator
 
-    def _run(self):
-        while not self._stop:
-            if self._last is None or random.random() < 0.3:
-                # change de cellule
-                x = random.randint(0, 5)
-                y = random.randint(0, 5)
-                self._last = (x, y)
-                self._dwell = 0.0
+    def set_calibrator(self, calibrator: Optional[GridCalibrator]) -> None:
+        self.calibrator = calibrator
+
+    def get_targets(self) -> List[Dict]:
+        """
+        Retourne une liste d'objets cibles:
+        {
+          "id": int|str,
+          "pos": (x,y,z?)  # coordonnées monde
+          "cell": (row,col) | None  # cellule 6×6, si calibré
+        }
+        """
+        raw = self.stream.get_positions()  # À implémentation existante (liste de dicts ou tuples)
+        targets: List[Dict] = []
+        for item in raw:
+            # Normaliser la structure reçue
+            if isinstance(item, dict):
+                x = float(item.get("x", 0.0))
+                y = float(item.get("y", 0.0))
+                z = float(item.get("z", 0.0))
+                tid = item.get("id", None)
             else:
-                x, y = self._last
-            vol = max(0.0, min(1.0, random.random()))
-            self._dwell += self.period_s
-            evt = TrackerEvent(x=x, y=y, volume=vol, dwell_s=self._dwell)
-            self.on_event(evt)
-            time.sleep(self.period_s)
+                # Exemple: tuple (id, x, y, z)
+                tid, x, y, z = item
+
+            cell = None
+            if self.calibrator is not None:
+                cell = self.calibrator.world_to_cell(x, y, smooth=True)
+
+            targets.append({
+                "id": tid,
+                "pos": (x, y, z),
+                "cell": cell
+            })
+        return targets
+

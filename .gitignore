@@ -35,3 +35,4 @@ venv/
 
 # --- CODEX ---
 codex/Chambre_sonore_Phase_*/transfer_log.json
+!codex/Chambre_sonore_Phase_3/transfer_log.json
