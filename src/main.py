@@ -19,7 +19,7 @@ def main():
     app = QApplication(sys.argv)
 
     ui = GridUI(pipeline=pipeline)
-    ui.resize(1200, 900)
+#    ui.resize(900,1500)
     ui.show()
 
     sys.exit(app.exec())
