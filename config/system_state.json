@@ -1,0 +1,16 @@
+{
+    "camera": {
+        "height_m": 1.75,
+        "angle_deg": 10.0,
+        "wall_dist_m": 0.04,
+        "offset_m": 0.0
+    },
+    "room": {
+        "width_m": 4.33,
+        "depth_m": 3.23
+    },
+    "grid": {
+        "rows": 3,
+        "cols": 4
+    }
+}

@@ -45,6 +45,36 @@ class CellConfigEntry:
         data["dmx"] = dmx_data
         return data
 
+    def clone(self):
+        return CellConfigEntry(
+            cell_id=self.cell_id,
+            name=self.name,
+            x_min=self.x_min,
+            x_max=self.x_max,
+            y_min=self.y_min,
+            y_max=self.y_max,
+            wav=self.wav,
+            volume=self.volume,
+            dmx=DMXConfig(
+                universe=self.dmx.universe,
+                address=self.dmx.address,
+                channels=self.dmx.channels,
+                color=self.dmx.color
+            )
+        )
+
+    def apply_from(self, other):
+        self.name = other.name
+        self.wav = other.wav
+        self.volume = other.volume
+        self.dmx = DMXConfig(
+            universe=other.dmx.universe,
+            address=other.dmx.address,
+            channels=other.dmx.channels,
+            color=other.dmx.color
+        )
+
+
     @staticmethod
     def from_dict(data: dict) -> "CellConfigEntry":
         dmx_data = data.get("dmx", {})
@@ -250,7 +280,10 @@ class CellConfig:
     # ------------------------------------------------------------------
 
     def get_cell(self, row: int, col: int) -> CellConfigEntry | None:
-        return self.cells.get(f"{row},{col}")
+        cell_id = f"{row},{col}"
+        cell_info = self.cells.get(cell_id)
+        # print("CELL INFO:", row, col, cell_info.wav if cell_info else None)
+        return cell_info
 
     def set_cell(self, entry: CellConfigEntry) -> None:
         self.cells[entry.cell_id] = entry

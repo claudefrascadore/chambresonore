@@ -25,6 +25,7 @@ Thumbs.db
 .vscode/
 .idea/
 .venv/
+.venv3*/
 venv/
 
 # --- ARCHIVES ---
@@ -36,3 +37,17 @@ venv/
 # --- CODEX ---
 codex/Chambre_sonore_Phase_*/transfer_log.json
 !codex/Chambre_sonore_Phase_3/transfer_log.json
+
+# --- ENVIRONNEMENTS LOCAUX ---
+/pygame/
+/obsensor.deb
+/pyorbbecsdk-*.whl
+/CP*timestamp*.csv
+/summary.csv
+/test_sensor.py
+/list_depth_modes.py
+/profondeur.py
+
+# --- DOSSIERS TEMPORAIRES INTERNES ---
+trash-bkp/
+
